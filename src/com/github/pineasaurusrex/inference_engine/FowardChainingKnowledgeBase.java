@@ -1,6 +1,7 @@
 package com.github.pineasaurusrex.inference_engine;
 
-import java.util.ArrayList;
+import java.util.ArrayDeque;
+import java.util.HashSet;
 
 public class FowardChainingKnowledgeBase extends KnowledgeBase {
     Action Ask(Query q) {
@@ -8,7 +9,16 @@ public class FowardChainingKnowledgeBase extends KnowledgeBase {
     }
 
     private boolean entails(Query q) {
-        ArrayList<Sentence> agenda = new ArrayList<>();
+        HashSet<Clause> inferred = new HashSet<>();
+        ArrayDeque<Clause> agenda = new ArrayDeque<>();
+
+        while (!agenda.isEmpty()) {
+            Clause premise = agenda.addLast();
+            if (!inferred.contains(premise)) {
+                inferred.add(premise);
+
+            }
+        }
         // TODO: the thing
     }
 }
