@@ -8,15 +8,19 @@ public class Main {
             System.exit(1);
         }
 
-        KnowledgeBase kb;
+        KnowledgeBase kb = new KnowledgeBase();
+        SearchAlgorithm search;
 
         switch (args[1].toUpperCase()) {
             case "FC":
-                kb = new FowardChainingKnowledgeBase();
+                search = new ForwardChainingAlgorithm(kb);
                 break;
             default:
                 System.err.println("Method \"" + args[1] + "\" not implemented");
                 System.exit(1);
         }
+
+        boolean result = search.entails();
+        System.out.println(result ? "YES: " : "NO: ");
     }
 }
