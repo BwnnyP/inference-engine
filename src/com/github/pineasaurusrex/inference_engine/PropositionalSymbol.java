@@ -10,4 +10,8 @@ public class PropositionalSymbol implements Clause {
     public boolean equals(PropositionalSymbol obj) {
         return symbol.equals(obj.symbol);
     }
+
+    public boolean containsPremise(PropositionalSymbol premise) {
+        return this.equals(premise);
+    }
 }

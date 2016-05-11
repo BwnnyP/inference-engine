@@ -10,15 +10,20 @@ public class FowardChainingKnowledgeBase extends KnowledgeBase {
 
     private boolean entails(Query q) {
         HashSet<Clause> inferred = new HashSet<>();
-        ArrayDeque<Clause> agenda = new ArrayDeque<>();
+        ArrayDeque<PropositionalSymbol> agenda = new ArrayDeque<>(getPropositionalSymbolsKnownToBeTrue());
 
         while (!agenda.isEmpty()) {
-            Clause premise = agenda.addLast();
+            PropositionalSymbol premise = agenda.addLast();
             if (!inferred.contains(premise)) {
                 inferred.add(premise);
+                for (Clause c : clauses) {
+                    if (!c.containsPremise(premise)) {
+                        continue;
+                    }
 
+                }
             }
         }
-        // TODO: the thing
+        return false;
     }
 }
