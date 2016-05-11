@@ -1,6 +1,6 @@
 package com.github.pineasaurusrex.inference_engine;
 
-public class PropositionalSymbol {
+public class PropositionalSymbol implements Clause {
     private String symbol;
 
     public PropositionalSymbol(String symbol) {
