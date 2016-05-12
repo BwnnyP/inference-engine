@@ -7,5 +7,11 @@ public abstract class SearchAlgorithm {
         this.knowledgeBase = kb;
     }
 
-    public abstract boolean entails(PropositionalSymbol q);
+    public abstract boolean entails(PropositionalSymbol q) throws InvalidKnowledgeBaseException;
+
+    public class InvalidKnowledgeBaseException extends Exception {
+        public InvalidKnowledgeBaseException(String message) {
+            super(message);
+        }
+    }
 }
