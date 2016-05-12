@@ -11,7 +11,7 @@ public class KnowledgeBase {
      * Add the clause to the Knowledge Base
      * @param c
      */
-    public void Tell(Clause c) {
+    public void tell(Clause c) {
         // TODO: assert that sentence is true given current knowledge
         clauses.add(c);
     }
@@ -25,13 +25,12 @@ public class KnowledgeBase {
     }
 
     /**
-     * Find the list of positive literals from the clauses in the Knowledge Base
-     * @return a list containing only positive literals
+     * @return the clauses in the Knowledge Base that are disjunct clauses
      */
-    public List<PropositionalSymbol> getPositiveLiterals() {
+    public List<DisjunctionClause> getDisjunctionClauses() {
         return clauses.stream()
-                .filter(c -> c instanceof PropositionalSymbol)
-                .map(c -> (PropositionalSymbol) c)
-                .collect(Collectors.toList();
+                .filter(c -> c instanceof DisjunctionClause)
+                .map(c -> (DisjunctionClause) c)
+                .collect(Collectors.toList());
     }
 }

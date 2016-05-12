@@ -1,5 +1,11 @@
 package com.github.pineasaurusrex.inference_engine;
 
+import java.util.List;
+
 public interface Clause {
-    boolean containsPremise(PropositionalSymbol premise);
+    List<Literal> getLiterals();
+
+    List<PropositionalSymbol> getNegativeSymbols();
+
+    List<PropositionalSymbol> getPositiveSymbols();
 }
