@@ -15,7 +15,7 @@ public class ForwardChainingAlgorithm extends SearchAlgorithm {
      * @param query the propositional symbol to check if the knowledge base can prove
      * @return if the
      */
-    public boolean entails(PropositionalSymbol query) throws InvalidKnowledgeBaseException {
+    public Optional<SearchAlgorithmResult> entails(PropositionalSymbol query) throws InvalidKnowledgeBaseException {
         Deque<PropositionalSymbol> agenda = initializeAgenda();
         Map<Clause, AtomicInteger> count = initializeCountMap();
         HashSet<PropositionalSymbol> inferredSymbols = new HashSet<>();
@@ -25,12 +25,14 @@ public class ForwardChainingAlgorithm extends SearchAlgorithm {
             PropositionalSymbol p = agenda.removeFirst();
             System.out.println("Expanding " + p);
 
-            // Abort if the query (goal clause) was found
-            if (p.equals(query)) return true;
-
             // If the symbol has not been inferred yet
             if (!inferredSymbols.contains(p)) {
                 inferredSymbols.add(p);
+
+                // Abort if the query (goal clause) was found
+                if (p.equals(query)) {
+                    return Optional.of(new ForwardChainingAlgorithmResult(inferredSymbols));
+                }
 
                 // Decrement the count of remaining premises for all clauses that contain p
                 // If all the premises of an implication are known, then we can add the conclusion to the agenda
@@ -52,7 +54,7 @@ public class ForwardChainingAlgorithm extends SearchAlgorithm {
         }
 
         // Could not prove the query
-        return false;
+        return Optional.empty();
     }
 
     /**

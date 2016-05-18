@@ -1,5 +1,8 @@
 package com.github.pineasaurusrex.inference_engine;
 
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -67,8 +70,11 @@ public class Main {
         PropositionalSymbol query = d;
         try {
             // ASK d
-            boolean result = search.entails(query);
-            System.out.println(result ? "YES: " : "NO: ");
+            Optional<SearchAlgorithmResult> result = search.entails(query);
+            System.out.println(result.isPresent() ? "YES: " : "NO: ");
+            if (result.isPresent()) {
+                System.out.println(.stream().map(PropositionalSymbol::toString).collect(Collectors.joining("; ")));
+            }
         } catch(SearchAlgorithm.InvalidKnowledgeBaseException exception) {
             System.err.println(search.getClass().getSimpleName() + " does not support the knowledge-base provided: " + exception.getMessage());
             System.exit(1);
