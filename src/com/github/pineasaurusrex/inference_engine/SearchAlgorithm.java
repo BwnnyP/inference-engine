@@ -1,5 +1,7 @@
 package com.github.pineasaurusrex.inference_engine;
 
+import java.util.Optional;
+
 public abstract class SearchAlgorithm {
     protected KnowledgeBase knowledgeBase;
 
@@ -7,7 +9,7 @@ public abstract class SearchAlgorithm {
         this.knowledgeBase = kb;
     }
 
-    public abstract boolean entails(PropositionalSymbol q) throws InvalidKnowledgeBaseException;
+    public abstract Optional<SearchAlgorithmResult> entails(PropositionalSymbol q) throws InvalidKnowledgeBaseException;
 
     public class InvalidKnowledgeBaseException extends Exception {
         public InvalidKnowledgeBaseException(String message) {
