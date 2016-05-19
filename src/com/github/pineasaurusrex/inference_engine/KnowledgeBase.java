@@ -32,6 +32,6 @@ public class KnowledgeBase {
         return clauses.stream()
                 .filter(c -> c instanceof PropositionalSymbol)
                 .map(c -> (PropositionalSymbol) c)
-                .collect(Collectors.toList();
+                .collect(Collectors.toList());
     }
 }

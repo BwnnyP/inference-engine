@@ -11,6 +11,10 @@ public class ForwardChainingAlgorithm extends SearchAlgorithm {
     }
 
     public boolean entails(PropositionalSymbol query) {
+        return false;
+    }
+/*
+    public boolean entails(PropositionalSymbol query) {
         Deque<PropositionalSymbol> agenda = new ConcurrentLinkedDeque<>(knowledgeBase.getPositiveLiterals());
         Map<Clause, AtomicInteger> count = initializeCountMap();
         HashSet<PropositionalSymbol> inferredSymbols = new HashSet<>();
@@ -45,7 +49,7 @@ public class ForwardChainingAlgorithm extends SearchAlgorithm {
         // Could not prove the query
         return false;
     }
-
+*/
     /**
      * Generate a map of the clauses in the KnowledgeBase to the number of symbols
      * @return
@@ -53,7 +57,7 @@ public class ForwardChainingAlgorithm extends SearchAlgorithm {
     private Map<Clause, AtomicInteger> initializeCountMap() {
         HashMap<Clause, AtomicInteger> count = new HashMap<>();
         for (Clause c : knowledgeBase.getClauses()) {
-            count.put(c, new AtomicInteger(c.getNumberOfSymbolsInPremise()));
+            //count.put(c, new AtomicInteger(c.getNumberOfSymbolsInPremise()));
         }
         return count;
     }

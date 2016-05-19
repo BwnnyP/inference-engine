@@ -4,52 +4,72 @@ import java.nio.file.*;
 
 public class Main {
 
+    private static KnowledgeBase kb = new KnowledgeBase();
+    private static PropositionalSymbol query;
+
     public static void main(String[] args) {
-	    if (args.length < 2) {
+        if (args.length < 2) {
             System.err.println("Usage: iengine method filename");
             System.exit(1);
         }
 
-        KnowledgeBase kb = new KnowledgeBase();
-        SearchAlgorithm search;
+        //read file
+        try {
+            readFile(args[1]);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        switch (args[1].toUpperCase()) {
+
+        //evaluate
+        SearchAlgorithm search;
+        boolean result = false;
+
+        switch (args[0].toUpperCase()) {
             case "FC":
-                search = new ForwardChainingAlgorithm(kb);
+                //search = new ForwardChainingAlgorithm(kb);
+                //result = search.entails(query);
                 break;
             default:
                 System.err.println("Method \"" + args[1] + "\" not implemented");
                 System.exit(1);
         }
 
-        boolean result = search.entails();
+        //boolean result = search.entails();
         System.out.println(result ? "YES: " : "NO: ");
     }
 
-    private void readFile(String filePath) throws Exception {
+    /**
+     * Read horn form knowledge base and query to be evaluated
+     * @param filePath relative file path to input text file
+     */
+    private static void readFile(String filePath) throws Exception {
         Path file = Paths.get(filePath);
+        String[] sClauseArray;
 
         try (InputStream in = Files.newInputStream(file);
              BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
 
             String line = reader.readLine();
             if (line != null) {
-                if (line.equals("TELL")) {
+                if (line.equalsIgnoreCase("TELL")) {
                     //file valid so far, read next line as KB
-                    //read next line
                     line = reader.readLine();
-                    String sClauseArray =  line.split(";");
-                    for (int i = 0; i < sClauseArray.length(); i++) {
-                        KnowledgeBase ClauseParser.parseSingle(sClauseArray[i]);
+                    sClauseArray = line.split(";");
+                    for (int i = 0; i < sClauseArray.length; i++) {
+                        //kb.Tell(ClauseParser.parseSingle(sClauseArray[i]));
+                        System.out.println(ClauseParser.parseSingle(sClauseArray[i]));
                     }
 
                 }
 
-                if (line.equals("ASK")) {
+                if (line.equalsIgnoreCase("ASK")) {
                     // read next line and do something in Query
+                    query = new PropositionalSymbol(reader.readLine());
 
 
                 }
             }
         }
+    }
 }
