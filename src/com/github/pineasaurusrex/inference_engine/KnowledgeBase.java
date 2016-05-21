@@ -5,32 +5,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class KnowledgeBase {
-    protected ArrayList<Clause> clauses = new ArrayList<>();
+    protected ArrayList<Sentence> sentences = new ArrayList<>();
 
-    /**
-     * Add the clause to the Knowledge Base
-     * @param c
-     */
-    public void tell(Clause c) {
+    public void tell(Sentence s) {
         // TODO: assert that sentence is true given current knowledge
-        clauses.add(c);
+        sentences.add(s);
     }
 
-    /**
-     * Return the clauses the Knowledge Base contains
-     * @return list
-     */
+    public List<Sentence> getSentences() {
+        return sentences;
+    }
+
     public List<Clause> getClauses() {
-        return clauses;
-    }
-
-    /**
-     * @return the clauses in the Knowledge Base that are disjunct clauses
-     */
-    public List<DisjunctionClause> getDisjunctionClauses() {
-        return clauses.stream()
-                .filter(c -> c instanceof DisjunctionClause)
-                .map(c -> (DisjunctionClause) c)
+        return sentences.stream()
+                .map(Clause::fromSentence)
                 .collect(Collectors.toList());
     }
 }
