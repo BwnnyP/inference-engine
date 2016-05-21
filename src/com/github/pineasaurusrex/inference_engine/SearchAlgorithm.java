@@ -9,10 +9,16 @@ public abstract class SearchAlgorithm {
         this.knowledgeBase = kb;
     }
 
-    public abstract Optional<SearchAlgorithmResult> entails(PropositionalSymbol q) throws InvalidKnowledgeBaseException;
+    public abstract Optional<SearchAlgorithmResult> entails(Sentence q) throws InvalidKnowledgeBaseException, InvalidQueryException;
 
     public class InvalidKnowledgeBaseException extends Exception {
         public InvalidKnowledgeBaseException(String message) {
+            super(message);
+        }
+    }
+
+    public class InvalidQueryException extends Exception {
+        public InvalidQueryException(String message) {
             super(message);
         }
     }

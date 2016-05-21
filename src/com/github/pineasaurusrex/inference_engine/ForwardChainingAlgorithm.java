@@ -15,7 +15,11 @@ public class ForwardChainingAlgorithm extends SearchAlgorithm {
      * @param query the propositional symbol to check if the knowledge base can prove
      * @return if the
      */
-    public Optional<SearchAlgorithmResult> entails(PropositionalSymbol query) throws InvalidKnowledgeBaseException {
+    public Optional<SearchAlgorithmResult> entails(Sentence query) throws InvalidKnowledgeBaseException, InvalidQueryException {
+        if (!query.isPropositionSymbol()) {
+            throw new InvalidQueryException("Query must be a propositional symbol");
+        }
+
         List<Clause> knowledgeBaseClauses = knowledgeBase.getClauses();
         Deque<PropositionalSymbol> agenda = initializeAgenda(knowledgeBaseClauses);
         Map<Clause, AtomicInteger> count = initializeCountMap(knowledgeBaseClauses);

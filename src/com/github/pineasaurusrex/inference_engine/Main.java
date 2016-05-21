@@ -57,6 +57,9 @@ public class Main {
         kb.tell(p2);
 
         switch (args[0].toUpperCase()) {
+            case "TT":
+                search = new TruthTableAlgorithm(kb);
+                break;
             case "FC":
                 search = new ForwardChainingAlgorithm(kb);
                 break;
@@ -66,16 +69,19 @@ public class Main {
                 return;
         }
 
-        PropositionalSymbol query = d;
+        Sentence query = d;
         try {
             // ASK d
             Optional<SearchAlgorithmResult> result = search.entails(query);
             System.out.println(result.isPresent() ? "YES: " : "NO: ");
             if (result.isPresent()) {
-                System.out.println(result.get().getInferredSymbols().stream().map(PropositionalSymbol::toString).collect(Collectors.joining("; ")));
+                System.out.println(result.get());
             }
         } catch(SearchAlgorithm.InvalidKnowledgeBaseException exception) {
             System.err.println(search.getClass().getSimpleName() + " does not support the knowledge-base provided: " + exception.getMessage());
+            System.exit(1);
+        } catch(SearchAlgorithm.InvalidQueryException exception) {
+            System.err.println(search.getClass().getSimpleName() + " does not support the query provided: " + exception.getMessage());
             System.exit(1);
         }
     }
