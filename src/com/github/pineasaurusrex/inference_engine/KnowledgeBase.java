@@ -29,13 +29,8 @@ public class KnowledgeBase {
      */
     public List<DisjunctionClause> getDisjunctionClauses() {
         return clauses.stream()
-<<<<<<< HEAD
-                .filter(c -> c instanceof PropositionalSymbol)
-                .map(c -> (PropositionalSymbol) c)
-=======
                 .filter(c -> c instanceof DisjunctionClause)
                 .map(c -> (DisjunctionClause) c)
->>>>>>> Redo the Forward Chaining algorithm and KB
                 .collect(Collectors.toList());
     }
 }

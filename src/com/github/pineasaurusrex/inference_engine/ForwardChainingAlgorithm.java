@@ -10,14 +10,6 @@ public class ForwardChainingAlgorithm extends SearchAlgorithm {
         super(kb);
     }
 
-<<<<<<< HEAD
-    public boolean entails(PropositionalSymbol query) {
-        return false;
-    }
-/*
-    public boolean entails(PropositionalSymbol query) {
-        Deque<PropositionalSymbol> agenda = new ConcurrentLinkedDeque<>(knowledgeBase.getPositiveLiterals());
-=======
     /**
      * Check if the knowledge base entails the query
      * @param query the propositional symbol to check if the knowledge base can prove
@@ -25,7 +17,6 @@ public class ForwardChainingAlgorithm extends SearchAlgorithm {
      */
     public Optional<SearchAlgorithmResult> entails(PropositionalSymbol query) throws InvalidKnowledgeBaseException {
         Deque<PropositionalSymbol> agenda = initializeAgenda();
->>>>>>> Redo the Forward Chaining algorithm and KB
         Map<Clause, AtomicInteger> count = initializeCountMap();
         HashSet<PropositionalSymbol> inferredSymbols = new HashSet<>();
 
@@ -65,7 +56,7 @@ public class ForwardChainingAlgorithm extends SearchAlgorithm {
         // Could not prove the query
         return Optional.empty();
     }
-*/
+
     /**
      * Initialize the agenda with all known facts
      * @return a thread-safe deque to be used as the initial agenda
@@ -93,11 +84,7 @@ public class ForwardChainingAlgorithm extends SearchAlgorithm {
     private Map<Clause, AtomicInteger> initializeCountMap() {
         HashMap<Clause, AtomicInteger> count = new HashMap<>();
         for (Clause c : knowledgeBase.getClauses()) {
-<<<<<<< HEAD
-            //count.put(c, new AtomicInteger(c.getNumberOfSymbolsInPremise()));
-=======
             count.put(c, new AtomicInteger(c.getNegativeSymbols().size()));
->>>>>>> Redo the Forward Chaining algorithm and KB
         }
         return count;
     }

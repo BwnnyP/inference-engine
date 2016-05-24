@@ -7,29 +7,25 @@ public class ClauseParser {
 
     /**
      * Convert String to a clause
+     * Currently only working for ImplicationClause!!!
+     * TODO: restructure to allow for many clauses
      * @return Clause
      */
-    public static String parseSingle (String inputString) {
+    public static ArrayDeque<String> parseSingle (String inputString) {
 
         //using ArrayDeque here since it does everything and is flexible. Could do a linkedList though..?
         ArrayDeque inputQueue = new ArrayDeque<String>();; //input queue. not sure if i really need this
-        ArrayList outputQueue = new ArrayList<Character>();//output queue
-        ArrayDeque operatorStack = new ArrayDeque<Character>(); //operator stack
+        ArrayDeque outputQueue = new ArrayDeque<String>();//output queue
+        ArrayDeque operatorStack = new ArrayDeque<String>(); //operator stack
 
         //remove spaces
         inputString = inputString.replaceAll("\\s+", "");
 
-        String inputArray[] = inputString.split("(?<==>|&|~|\\/|<=>)|(?==>|&|~|\\/|<=>)");
+        //String inputArray[] = inputString.split("(?<==>|&|~|\\/|<=>)|(?==>|&|~|\\/|<=>)");
+        String inputArray[] = inputString.split("(?<==>|&)|(?==>|&)");
         for (String inputElement: inputArray) {
             inputQueue.add(inputElement);
         }
-
-        /*
-        //testing output
-        for (Iterator itr = inputQueue.iterator(); itr.hasNext();) {
-            System.out.println("Test operand: " + itr.next());
-        }*/
-
 
         //convert to rpn form
         //don't worry about parentheses, do later as part of research
@@ -59,12 +55,30 @@ public class ClauseParser {
             outputQueue.add(operatorStack.pollLast());
         }
 
+        //testing output
+        for (Iterator itr = outputQueue.iterator(); itr.hasNext();) {
+            System.out.println("Test operand (RPN): " + itr.next());
+        }
+
+
 
         //TODO: maybe convert proposition symbol to Horn form
 
 
         //System.out.println("Test line: " + inputString);
-        return ("RPN form clause: " + outputQueue.toString());
+        return (outputQueue);
+    }
+
+    public static PropositionalSymbol clauseToPropositionalSymbol (String inputClause) {
+        return (new PropositionalSymbol(inputClause));
+    }
+
+    public static List<PropositionalSymbol> clauseToPropositionalSymbol (String[] inputClause) {
+        List<PropositionalSymbol> sentence = new LinkedList<PropositionalSymbol>();
+        for (String element:inputClause) {
+            sentence.add(new PropositionalSymbol(element));
+        }
+        return sentence;
     }
 
 

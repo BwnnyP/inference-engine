@@ -1,7 +1,9 @@
 package com.github.pineasaurusrex.inference_engine;
 import java.io.*;
 import java.nio.file.*;
-
+import java.util.ArrayDeque;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -26,21 +28,18 @@ public class Main {
 
         //evaluate
         SearchAlgorithm search;
-        boolean result = false;
 
-<<<<<<< HEAD
-=======
-        PropositionalSymbol p1 = new PropositionalSymbol("p1");
-        PropositionalSymbol p2 = new PropositionalSymbol("p2");
-        PropositionalSymbol p3 = new PropositionalSymbol("p3");
-        PropositionalSymbol a = new PropositionalSymbol("a");
-        PropositionalSymbol b = new PropositionalSymbol("b");
-        PropositionalSymbol c = new PropositionalSymbol("c");
-        PropositionalSymbol d = new PropositionalSymbol("d");
-        PropositionalSymbol e = new PropositionalSymbol("e");
-        PropositionalSymbol f = new PropositionalSymbol("f");
-        PropositionalSymbol g = new PropositionalSymbol("g");
-        PropositionalSymbol h = new PropositionalSymbol("h");
+        PropositionalSymbol p1 = new PropositionalSymbol("p11");
+        PropositionalSymbol p2 = new PropositionalSymbol("p22");
+        PropositionalSymbol p3 = new PropositionalSymbol("p33");
+        PropositionalSymbol a = new PropositionalSymbol("aa");
+        PropositionalSymbol b = new PropositionalSymbol("bb");
+        PropositionalSymbol c = new PropositionalSymbol("cc");
+        PropositionalSymbol d = new PropositionalSymbol("dd");
+        PropositionalSymbol e = new PropositionalSymbol("ee");
+        PropositionalSymbol f = new PropositionalSymbol("ff");
+        PropositionalSymbol g = new PropositionalSymbol("gg");
+        PropositionalSymbol h = new PropositionalSymbol("hh");
 
         // TELL p2 => p3
         kb.tell(new ImplicationClause(new Literal(p3), new Literal(p2)));
@@ -73,7 +72,6 @@ public class Main {
         kb.tell(new Literal(p2));
 
 
->>>>>>> Redo the Forward Chaining algorithm and KB
         switch (args[0].toUpperCase()) {
             case "FC":
                 //search = new ForwardChainingAlgorithm(kb);
@@ -85,23 +83,19 @@ public class Main {
                 return;
         }
 
-<<<<<<< HEAD
-        //boolean result = search.entails();
-        System.out.println(result ? "YES: " : "NO: ");
-=======
+        /*
         PropositionalSymbol query = d;
         try {
             // ASK d
             Optional<SearchAlgorithmResult> result = search.entails(query);
             System.out.println(result.isPresent() ? "YES: " : "NO: ");
             if (result.isPresent()) {
-                System.out.println(.stream().map(PropositionalSymbol::toString).collect(Collectors.joining("; ")));
+                System.out.println(.map(PropositionalSymbol::toString).collect(Collectors.joining("; ")));
             }
         } catch(SearchAlgorithm.InvalidKnowledgeBaseException exception) {
             System.err.println(search.getClass().getSimpleName() + " does not support the knowledge-base provided: " + exception.getMessage());
             System.exit(1);
-        }
->>>>>>> Redo the Forward Chaining algorithm and KB
+        } */
     }
 
     /**
@@ -111,6 +105,7 @@ public class Main {
     private static void readFile(String filePath) throws Exception {
         Path file = Paths.get(filePath);
         String[] sClauseArray;
+        ArrayDeque fact = new ArrayDeque<String>();
 
         try (InputStream in = Files.newInputStream(file);
              BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
@@ -124,6 +119,40 @@ public class Main {
                     for (int i = 0; i < sClauseArray.length; i++) {
                         //kb.Tell(ClauseParser.parseSingle(sClauseArray[i]));
                         System.out.println(ClauseParser.parseSingle(sClauseArray[i]));
+                        fact = ClauseParser.parseSingle(sClauseArray[i]);
+
+                        List<Literal> literalList = new LinkedList<Literal>();
+                        Literal conclusion = new Literal(""); //TODO i don't like how this is initialized
+
+                        while (!fact.isEmpty()){
+                            if (fact.size() == 1) {
+                                kb.tell(new Literal( new PropositionalSymbol((String)fact.pollLast())));
+                                continue;
+
+                            } else if (ClauseParser.isOperator((String)fact.peekLast())) {
+                                switch ((String)fact.pollLast()) {
+                                    case "=>":
+                                        //assumes only two operands. TODO check that this assumption okay
+                                        //kb.tell(new ImplicationClause(new Literal((String)fact.pollLast()), new Literal((String)fact.pollLast())) );
+                                        conclusion = new Literal((String)fact.pollLast());
+                                        literalList.add(new Literal((String)fact.pollLast()));
+                                        break;
+                                    case  "&":
+                                        //TODO
+                                        break;
+                                    default:
+                                        throw new IllegalArgumentException("Invalid operator found in KB");
+                                }
+                            }
+
+                            kb.tell(new ImplicationClause(literalList, conclusion));
+                        }
+
+
+
+
+
+
                     }
 
                 }
@@ -137,4 +166,6 @@ public class Main {
             }
         }
     }
+
+
 }
