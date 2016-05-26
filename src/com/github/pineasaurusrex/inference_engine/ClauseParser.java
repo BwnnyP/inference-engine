@@ -21,7 +21,7 @@ public class ClauseParser {
         //remove spaces
         inputString = inputString.replaceAll("\\s+", "");
 
-        //String inputArray[] = inputString.split("(?<==>|&|~|\\/|<=>)|(?==>|&|~|\\/|<=>)");
+        //String inputArray[] = inputString.split("(?<==>|&|~|\\/|<=>)|(?==>|&|~|\\/|<=>)"); TODO expand for full propositional logic, confirm symbols
         String inputArray[] = inputString.split("(?<==>|&)|(?==>|&)");
         for (String inputElement: inputArray) {
             inputQueue.add(inputElement);
@@ -55,17 +55,8 @@ public class ClauseParser {
             outputQueue.add(operatorStack.pollLast());
         }
 
-        //testing output
-        for (Iterator itr = outputQueue.iterator(); itr.hasNext();) {
-            System.out.println("Test operand (RPN): " + itr.next());
-        }
-
-
-
         //TODO: maybe convert proposition symbol to Horn form
 
-
-        //System.out.println("Test line: " + inputString);
         return (outputQueue);
     }
 
@@ -94,20 +85,8 @@ public class ClauseParser {
     }
 */
 
-
-
-    private static final Map<String, Integer> OPERATOR = new HashMap<String, Integer>();
-    static {
-        OPERATOR.put("~", 1);    //negation for research
-        OPERATOR.put("&", 2);  //inclusive disjunction /\
-        OPERATOR.put("\\/", 3);  //disjunction for research
-        OPERATOR.put("=>", 4);   //implies
-        OPERATOR.put("<=>", 5);  //biconditional for research
-
-    }
-
     public static int compare(String o1, String o2) {
-        return (OPERATOR.get(o1) - OPERATOR.get(o2));
+        return (Connective.getValueFromSymbol(o1).getPrecedence() - Connective.getValueFromSymbol(o2).getPrecedence());
     }
 
     /**
@@ -115,7 +94,11 @@ public class ClauseParser {
      * @return boolean
      */
     public static boolean isOperator(String token) {
-        return OPERATOR.containsKey(token);
+        if (Connective.getValueFromSymbol(token) == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }

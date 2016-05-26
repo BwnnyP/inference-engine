@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * A literal consists of a single propositional symbol or it's negation
  */
-public class Literal implements Clause {
+public class Literal {
     private PropositionalSymbol symbol;
     private boolean negated;
 
@@ -52,32 +52,10 @@ public class Literal implements Clause {
 
     public String toString() {
         if (negated) {
-            return "¬ " + symbol.toString();
+            return Connective.NOT.getSymbol() + symbol.toString();
         } else {
             return symbol.toString();
         }
     }
 
-    @Override
-    public List<Literal> getLiterals() {
-        return Collections.singletonList(this);
-    }
-
-    @Override
-    public List<PropositionalSymbol> getNegativeSymbols() {
-        if (negated) {
-            return Collections.singletonList(this.getSymbol());
-        } else {
-            return new ArrayList<>();
-        }
-    }
-
-    @Override
-    public List<PropositionalSymbol> getPositiveSymbols() {
-        if (!negated) {
-            return Collections.singletonList(this.getSymbol());
-        } else {
-            return new ArrayList<>();
-        }
-    }
 }
