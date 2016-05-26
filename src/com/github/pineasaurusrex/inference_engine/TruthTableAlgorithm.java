@@ -31,13 +31,14 @@ public class TruthTableAlgorithm extends SearchAlgorithm {
         if (!symbols.isEmpty()) {
             PropositionalSymbol symbol = symbols.get(0);
             List<PropositionalSymbol> remainingSymbols = symbols.subList(1, symbols.size());
-            modelCounter.addAndGet(2);
 
             // possible research: try using multi-threading and exploring it in parallel
             return Stream.of(false, true).flatMap(val -> checkAll(q, remainingSymbols, model.union(symbol, val), modelCounter));
         } else {
             if (model.holdsTrue(knowledgeBase)) {
-                return Stream.of(model.holdsTrue(q));
+                boolean entailsQuery = model.holdsTrue(q);
+                if (entailsQuery) { modelCounter.incrementAndGet(); }
+                return Stream.of(entailsQuery);
             } else {
                 // when KB is false, return true
                 return Stream.of(true);
