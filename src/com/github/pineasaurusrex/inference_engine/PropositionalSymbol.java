@@ -2,7 +2,7 @@ package com.github.pineasaurusrex.inference_engine;
 
 import java.util.HashMap;
 import java.util.*;
-
+import java.util.stream.Stream;
 /**
  * This class represents a single propositional symbol, which can be chained together to form a logical sentence
  */
@@ -33,11 +33,6 @@ public class PropositionalSymbol extends Sentence {
     }
 
     @Override
-    public int getNumberOfSentences() {
-        return 1;
-    }
-
-    @Override
     public Sentence getOperand(int i) {
         if (i != 0) throw new IllegalArgumentException();
         return this;
@@ -47,6 +42,11 @@ public class PropositionalSymbol extends Sentence {
     public Sentence[] getOperands() {
         Sentence[] sentences = { this };
         return sentences;
+    }
+
+    @Override
+    public Stream<PropositionalSymbol> getPropositionalSymbols() {
+        return Stream.of(this);
     }
 
     public boolean equals(PropositionalSymbol obj) {

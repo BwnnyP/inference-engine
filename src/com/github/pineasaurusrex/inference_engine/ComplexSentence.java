@@ -1,6 +1,9 @@
 package com.github.pineasaurusrex.inference_engine;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -29,11 +32,6 @@ public class ComplexSentence extends Sentence {
     }
 
     @Override
-    public int getNumberOfSentences() {
-        return operands.length;
-    }
-
-    @Override
     public Sentence getOperand(int i) {
         return operands[i];
     }
@@ -41,6 +39,11 @@ public class ComplexSentence extends Sentence {
     @Override
     public Sentence[] getOperands() {
         return operands;
+    }
+
+    @Override
+    public Stream<PropositionalSymbol> getPropositionalSymbols() {
+        return Arrays.stream(operands).flatMap(Sentence::getPropositionalSymbols);
     }
 
     @Override

@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class Main {
 
     private static KnowledgeBase kb = new KnowledgeBase();
-    private static PropositionalSymbol query;
+    private static Sentence query;
 
     public static void main(String[] args) {
         if (args.length < 2) {
@@ -31,6 +31,9 @@ public class Main {
         SearchAlgorithm search;
 
         switch (args[0].toUpperCase()) {
+            case "TT":
+                search = new TruthTableAlgorithm(kb);
+                break;
             case "FC":
                 search = new ForwardChainingAlgorithm(kb);
                 break;
@@ -45,10 +48,13 @@ public class Main {
             Optional<SearchAlgorithmResult> result = search.entails(query);
             System.out.println(result.isPresent() ? "YES: " : "NO: ");
             if (result.isPresent()) {
-                System.out.println(result.get().getInferredSymbols().stream().map(PropositionalSymbol::toString).collect(Collectors.joining("; ")));
+                System.out.println(result.get());
             }
         } catch(SearchAlgorithm.InvalidKnowledgeBaseException exception) {
             System.err.println(search.getClass().getSimpleName() + " does not support the knowledge-base provided: " + exception.getMessage());
+            System.exit(1);
+        } catch(SearchAlgorithm.InvalidQueryException exception) {
+            System.err.println(search.getClass().getSimpleName() + " does not support the query provided: " + exception.getMessage());
             System.exit(1);
         }
     }
@@ -77,7 +83,7 @@ public class Main {
             line = reader.readLine();
             if (line.equalsIgnoreCase("ASK")) {
                 // read next line and do something in Query
-                query = new PropositionalSymbol(reader.readLine());
+                query = PropositionalSymbol.addStringToPropositionalSymbol(reader.readLine().trim());
             }
         }
     }
