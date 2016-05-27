@@ -93,5 +93,4 @@ public class ForwardChainingAlgorithm extends SearchAlgorithm {
         }
         return count;
     }
-
 }
