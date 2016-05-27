@@ -20,14 +20,14 @@ public class Main {
             System.exit(1);
         }
 
-        //read file
+        // Read file and populate KB
         try {
             readFile(args[1]);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        //evaluate
+        // Create search algorithm
         SearchAlgorithm search;
 
         switch (args[0].toUpperCase()) {
@@ -46,6 +46,7 @@ public class Main {
                 return;
         }
 
+        // Ask the search algorithm about the query
         try {
             Optional<SearchAlgorithmResult> result = search.entails(query);
             if (result.isPresent()) {
