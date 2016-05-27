@@ -47,11 +47,11 @@ public class Main {
         }
 
         try {
-            // ASK d
             Optional<SearchAlgorithmResult> result = search.entails(query);
-            System.out.println(result.isPresent() ? "YES: " : "NO: ");
             if (result.isPresent()) {
-                System.out.println(result.get());
+                System.out.println("YES: " + result.get());
+            } else {
+                System.out.println("NO");
             }
         } catch(SearchAlgorithm.InvalidKnowledgeBaseException exception) {
             System.err.println(search.getClass().getSimpleName() + " does not support the knowledge-base provided: " + exception.getMessage());
