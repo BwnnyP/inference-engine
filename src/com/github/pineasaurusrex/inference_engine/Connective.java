@@ -4,6 +4,7 @@ package com.github.pineasaurusrex.inference_engine;
 public enum Connective {
     NOT("~", 10, 1),
     AND("&", 8, 2),
+    OR("\\/", 6, 2), //as specified 
     IMPLICATION("=>", 4, 2),
     BICONDITIONAL("<=>", 2, 2);
 

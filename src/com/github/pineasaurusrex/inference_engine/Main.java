@@ -93,13 +93,13 @@ public class Main {
 
             } else {
                 switch (rpnSentence.pollFirst()) {
-                    case "=>":
+                    case "=>" :
                         outputQueue.add(new ComplexSentence(Connective.IMPLICATION, outputQueue.pollFirst(), outputQueue.pollFirst()));
                         break;
                     case  "&":
                         outputQueue.add(new ComplexSentence(Connective.AND, outputQueue.pollFirst(), outputQueue.pollFirst()));
                         break;
-                    case  "|":
+                    case  "\\/":
                         outputQueue.add(new ComplexSentence(Connective.OR, outputQueue.pollFirst(), outputQueue.pollFirst()));
                         break;
                     case  "<=>":
