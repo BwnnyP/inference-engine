@@ -3,10 +3,10 @@ package com.github.pineasaurusrex.inference_engine;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class ForwardChainingAlgorithmResult implements SearchAlgorithmResult {
+public class ChainingAlgorithmResult implements SearchAlgorithmResult {
     private Set<PropositionalSymbol> inferredSymbols;
 
-    public ForwardChainingAlgorithmResult(Set<PropositionalSymbol> inferredSymbols) {
+    public ChainingAlgorithmResult(Set<PropositionalSymbol> inferredSymbols) {
         this.inferredSymbols = inferredSymbols;
     }
 

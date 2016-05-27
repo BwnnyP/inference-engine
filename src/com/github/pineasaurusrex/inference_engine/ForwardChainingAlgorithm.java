@@ -36,7 +36,7 @@ public class ForwardChainingAlgorithm extends SearchAlgorithm {
 
                 // Abort if the query (goal clause) was found
                 if (p.equals(query)) {
-                    return Optional.of(new ForwardChainingAlgorithmResult(inferredSymbols));
+                    return Optional.of(new ChainingAlgorithmResult(inferredSymbols));
                 }
 
                 // Decrement the count of remaining premises for all clauses that contain p

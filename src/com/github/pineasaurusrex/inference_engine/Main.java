@@ -37,8 +37,11 @@ public class Main {
             case "FC":
                 search = new ForwardChainingAlgorithm(kb);
                 break;
+            case "BC":
+                search = new BackwardChainingAlgorithm(kb);
+                break;
             default:
-                System.err.println("Method \"" + args[1] + "\" not implemented");
+                System.err.println("Method \"" + args[0] + "\" not implemented");
                 System.exit(1);
                 return;
         }
