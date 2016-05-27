@@ -27,7 +27,6 @@ public class PropositionalSymbol extends Sentence {
         }
     }
 
-
     @Override
     public Connective getConnective() {
         return null;
@@ -58,7 +57,6 @@ public class PropositionalSymbol extends Sentence {
     public int hashCode() {
         return symbol.hashCode();
     }
-
 
     public String toString() {
         return symbol;

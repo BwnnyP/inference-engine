@@ -1,7 +1,5 @@
 package com.github.pineasaurusrex.inference_engine;
 
-import java.util.HashMap;
-
 //connective symbol, precedence, number of operands expected
 public enum Connective {
     NOT("~", 10, 1),
@@ -18,7 +16,6 @@ public enum Connective {
         this.symbol = symbol;
         this.precedence = precedence;
         this.operands = operands;
-
     }
 
     public String getSymbol() {

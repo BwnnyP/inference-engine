@@ -57,5 +57,4 @@ public class Literal {
             return symbol.toString();
         }
     }
-
 }

@@ -20,9 +20,11 @@ public class KnowledgeBase {
         for (Sentence element : s) tell(element);
     }
 
+
     public List<Sentence> getSentences() {
         return sentences;
     }
+
 
     /**
      * @return the clauses in the Knowledge Base that are disjunct clauses

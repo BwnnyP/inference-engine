@@ -6,13 +6,15 @@ import java.util.stream.Collectors;
 
 import java.util.Optional;
 
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 public class Main {
 
     private static KnowledgeBase kb = new KnowledgeBase();
     private static PropositionalSymbol query;
 
     public static void main(String[] args) {
-
         if (args.length < 2) {
             System.err.println("Usage: iengine method filename");
             System.exit(1);
@@ -25,56 +27,8 @@ public class Main {
             e.printStackTrace();
         }
 
-
         //evaluate
         SearchAlgorithm search;
-
-/*
-        PropositionalSymbol p1 = new PropositionalSymbol("p1");
-        PropositionalSymbol p2 = new PropositionalSymbol("p2");
-        PropositionalSymbol p3 = new PropositionalSymbol("p3");
-        PropositionalSymbol a = new PropositionalSymbol("a");
-        PropositionalSymbol b = new PropositionalSymbol("b");
-        PropositionalSymbol c = new PropositionalSymbol("c");
-        PropositionalSymbol d = new PropositionalSymbol("d");
-        PropositionalSymbol e = new PropositionalSymbol("e");
-        PropositionalSymbol f = new PropositionalSymbol("f");
-        PropositionalSymbol g = new PropositionalSymbol("g");
-        PropositionalSymbol h = new PropositionalSymbol("h");
-
-        // TELL p2 => p3
-        kb.tell(new ComplexSentence(Connective.IMPLICATION, p2, p3));
-
-        // TELL p3 => p1
-        kb.tell(new ComplexSentence(Connective.IMPLICATION, p3, p1));
-
-        // TELL c => e
-        kb.tell(new ComplexSentence(Connective.IMPLICATION, c, e));
-
-        // TELL b&e => f
-        kb.tell(new ComplexSentence(Connective.IMPLICATION, new ComplexSentence(Connective.AND, b, e), f));
-
-        // TELL f&g => h
-        kb.tell(new ComplexSentence(Connective.IMPLICATION, new ComplexSentence(Connective.AND, f, g), h));
-
-        // TELL p1 => d
-        kb.tell(new ComplexSentence(Connective.IMPLICATION, p1, d));
-
-        // TELL p1&p3 => c
-        kb.tell(new ComplexSentence(Connective.IMPLICATION, new ComplexSentence(Connective.AND, p1, p3), c));
-
-        // TELL a
-        kb.tell(a);
-
-        // TELL b
-        kb.tell(b);
-
-        // TELL p2
-        kb.tell(p2);
-
-        PropositionalSymbol query = d;
-*/
-
 
         switch (args[0].toUpperCase()) {
             case "FC":
@@ -132,10 +86,8 @@ public class Main {
 
         ArrayDeque<Sentence> outputQueue = new ArrayDeque<>();
 
-        //TODO this will create duplicate PropositionalSymbol objects, check if this is bad. YES this is bad
         while (!rpnSentence.isEmpty()){
             if (!ClauseParser.isOperator(rpnSentence.peekFirst())) {
-                //TODO need to check if PropositionalSymbol already exists
                 outputQueue.add(PropositionalSymbol.addStringToPropositionalSymbol(rpnSentence.pollFirst()));
                 continue;
 
