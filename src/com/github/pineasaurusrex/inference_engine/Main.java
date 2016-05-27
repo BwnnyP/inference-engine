@@ -5,7 +5,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class Main {
 
@@ -13,8 +12,6 @@ public class Main {
     private static PropositionalSymbol query;
 
     public static void main(String[] args) {
-
-        System.out.println(Connective.getValueFromSymbol("&"));
 
         if (args.length < 2) {
             System.err.println("Usage: iengine method filename");
@@ -75,7 +72,7 @@ public class Main {
         // TELL p2
         kb.tell(p2);
 
-        //PropositionalSymbol query = d;
+        PropositionalSymbol query = d;
 */
 
 
@@ -88,7 +85,6 @@ public class Main {
                 System.exit(1);
                 return;
         }
-
 
         try {
             // ASK d
@@ -120,7 +116,6 @@ public class Main {
                 line = reader.readLine();
                 sClauseArray = line.split(";");
                 for (int i = 0; i < sClauseArray.length; i++) {
-                    //System.out.println(ClauseParser.parseSingle(sClauseArray[i]));
                     kb.tell(evaluateRPNtoSentence(ClauseParser.parseSingle(sClauseArray[i])));
                 }
             }
@@ -140,7 +135,8 @@ public class Main {
         //TODO this will create duplicate PropositionalSymbol objects, check if this is bad. YES this is bad
         while (!rpnSentence.isEmpty()){
             if (!ClauseParser.isOperator(rpnSentence.peekFirst())) {
-                outputQueue.add(new PropositionalSymbol(rpnSentence.pollFirst()));
+                //TODO need to check if PropositionalSymbol already exists
+                outputQueue.add(PropositionalSymbol.addStringToPropositionalSymbol(rpnSentence.pollFirst()));
                 continue;
 
             } else {

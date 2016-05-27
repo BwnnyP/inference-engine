@@ -1,5 +1,8 @@
 package com.github.pineasaurusrex.inference_engine;
 
+import java.util.HashMap;
+import java.util.*;
+
 /**
  * This class represents a single propositional symbol, which can be chained together to form a logical sentence
  */
@@ -10,6 +13,20 @@ public class PropositionalSymbol extends Sentence {
     public PropositionalSymbol(String symbol) {
         this.symbol = symbol.toLowerCase();
     }
+
+
+    private static Map<String, PropositionalSymbol> propositionalSymbolHashMap = new HashMap<String, PropositionalSymbol>();
+
+    public static PropositionalSymbol addStringToPropositionalSymbol(String inputString) {
+        if (propositionalSymbolHashMap.containsKey(inputString)) {
+            return propositionalSymbolHashMap.get(inputString);
+        } else {
+            PropositionalSymbol symbol = new PropositionalSymbol(inputString);
+            propositionalSymbolHashMap.put(inputString, symbol);
+            return symbol;
+        }
+    }
+
 
     @Override
     public Connective getConnective() {
