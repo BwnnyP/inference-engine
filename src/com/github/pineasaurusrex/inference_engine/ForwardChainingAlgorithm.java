@@ -28,7 +28,7 @@ public class ForwardChainingAlgorithm extends SearchAlgorithm {
         // Loop through the agenda
         while (!agenda.isEmpty()) {
             PropositionalSymbol p = agenda.removeFirst();
-            System.out.println("Expanding " + p);
+            System.err.println("Expanding " + p);
 
             // If the symbol has not been inferred yet
             if (!inferredSymbols.contains(p)) {
@@ -45,13 +45,13 @@ public class ForwardChainingAlgorithm extends SearchAlgorithm {
                         .parallelStream()
                         .filter(c -> c.getNegativeSymbols().contains(p))
                         .forEach(c -> {
-                            System.out.println(p + " is a premise of " + c);
+                            System.err.println(p + " is a premise of " + c);
                             int newCount = count.get(c).decrementAndGet();
 
                             // If all the premises of an implication are known, then we can add the conclusion to the agenda
                             if (newCount == 0) {
                                 PropositionalSymbol conclusion = c.getPositiveSymbols().get(0);
-                                System.out.println("all premises of " + c + " have been found, adding " + conclusion + " to agenda");
+                                System.err.println("all premises of " + c + " have been found, adding " + conclusion + " to agenda");
                                 agenda.addLast(conclusion);
                             }
                 });

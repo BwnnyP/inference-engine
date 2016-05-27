@@ -27,20 +27,20 @@ public class BackwardChainingAlgorithm extends SearchAlgorithm {
         while (!agenda.isEmpty()) {
             PropositionalSymbol p = agenda.remove(0);
             entailed.add(p);
-            System.out.println("Expanding " + p);
+            System.err.println("Expanding " + p);
 
             if (facts.contains(p)) {
-                System.out.println(p + " is known as a fact");
+                System.err.println(p + " is known as a fact");
             } else {
                 Optional<Clause> rule = knowledgeBaseClauses.stream()
                         .filter(clause -> clause.getPositiveSymbols().contains(p))
                         .findAny();
                 // todo: handle if multiple rules are found
                 if (rule.isPresent()) {
-                    System.out.println("can prove " + p + " if " + rule.get());
+                    System.err.println("can prove " + p + " if " + rule.get());
                     rule.get().getNegativeSymbols().stream().filter(s -> !agenda.contains(s)).forEach(agenda::add);
                 } else {
-                    System.out.println("No way to prove " + p + " - ASSUMING NO/UNKNOWN");
+                    System.err.println("No way to prove " + p + " - ASSUMING NO/UNKNOWN");
                     return Optional.empty();
                 }
             }
