@@ -8,7 +8,6 @@ public class ClauseParser {
     /**
      * Convert String to a clause
      * Currently only working for ImplicationClause!!!
-     * TODO: restructure to allow for many clauses
      * @return Clause
      */
     public static ArrayDeque<String> parseSingle (String inputString) {
@@ -21,8 +20,7 @@ public class ClauseParser {
         //remove spaces
         inputString = inputString.replaceAll("\\s+", "");
 
-        //String inputArray[] = inputString.split("(?<==>|&|~|\\/|<=>)|(?==>|&|~|\\/|<=>)"); TODO expand for full propositional logic, confirm symbols
-        String inputArray[] = inputString.split("(?<==>|&)|(?==>|&)");
+        String inputArray[] = inputString.split("(?<==>|&|~|\\/|<=>)|(?==>|&|~|\\/|<=>)"); //TODO build this regex dynamically from Connective enum
         for (String inputElement: inputArray) {
             inputQueue.add(inputElement);
         }
@@ -71,19 +69,6 @@ public class ClauseParser {
         }
         return sentence;
     }
-
-
-/*
-    public static Clause parseMany (String inputString, String delimiter) {
-        String[] inputArray = inputString.split(delimiter);
-
-        for (int i=0; inputArray.length; i++) {
-            parseSingle(inputArray[i]);
-        }
-
-        return //some clause
-    }
-*/
 
     public static int compare(String o1, String o2) {
         return (Connective.getValueFromSymbol(o1).getPrecedence() - Connective.getValueFromSymbol(o2).getPrecedence());
